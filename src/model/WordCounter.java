@@ -115,18 +115,18 @@ public class WordCounter implements HashInterface<HashElement>{
 	
 	public HashElement getMostCommonWord() {
 		
-		HashElement mostCommonWord = null;
+		HashElement mostCommonWord = new HashElement("Temporary word to compare");
 		
-		for (int i = 1; i < hashtable.length; i++) {
+		for (int i = 0; i < hashtable.length; i++) {
 			
-			if (hashtable[i] == null || hashtable[i - 1] == null) {
-				continue;
-			}
-			
-			if (hashtable[i - 1].getCount() > hashtable[i].getCount()) {
-				mostCommonWord = hashtable[i - 1];
+			if (hashtable[i] != null) {
+				
+				if (hashtable[i].getCount() >= mostCommonWord.getCount()) {
+					mostCommonWord = hashtable[i];
+				}
+				
 			} else {
-				mostCommonWord = hashtable[i];
+				continue;
 			}
 			
 		}

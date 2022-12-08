@@ -8,6 +8,14 @@ import model.WordCounter;
 
 public class WordCounterApp {
 	
+	public static String removeNonletters(String string) {
+		
+		string = string.replaceAll("[^a-z]", "");
+		
+		return string;
+		
+	}
+	
 	public static void main(String[] args) throws FileNotFoundException {
 		int numberOfWordsInFile = 0;
 		Scanner input = new Scanner(System.in);
@@ -27,15 +35,19 @@ public class WordCounterApp {
 		
 		input.close();
 		
+		
 		try(Scanner fileReader = new Scanner(fileToRead)){
 			
 			String currentLine;
 			String [] splittedLine;
 			
-			
 			while(fileReader.hasNextLine()) {
 				
 				currentLine = fileReader.nextLine().toLowerCase();
+				
+				if (currentLine.equals("")) {
+					continue;
+				}
 				
 				splittedLine = currentLine.split(" ");
 				
@@ -43,7 +55,9 @@ public class WordCounterApp {
 				
 				for (int i = 0; i < splittedLine.length; i++) {
 					
-					instanceCounter.put(new HashElement(splittedLine[i]));
+					splittedLine[i].trim(); // Eliminates spaces//
+					
+					instanceCounter.put(new HashElement(removeNonletters(splittedLine[i]))); //Places a word with non unique characters and numbers//
 					
 				}
 				
