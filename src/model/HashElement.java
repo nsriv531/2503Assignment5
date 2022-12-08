@@ -6,6 +6,10 @@ private String word; //key for the hash table
 private int count;
 
 
+public HashElement(String word) {
+	
+	this.word = word;
+}
 
 	public String getWord() {
 		return word;
@@ -21,15 +25,11 @@ private int count;
 	}
 
 
-
-
-public String toString() {
+	public String toString() {
 	
 	
 	return word+"  "+getCount();
 }
-
-
 
 	
 }

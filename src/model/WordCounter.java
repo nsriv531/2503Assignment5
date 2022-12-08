@@ -3,10 +3,12 @@ package model;
 public class WordCounter implements HashInterface<HashElement>{
 	
 	private int size;
-
+	private HashElement[] hashtable;
+	
+	
 	public WordCounter(int size) {
 		this.size = size;
-		HashElement[] hashtable = new HashElement[size];
+		hashtable = new HashElement[size];
 		reset();
 		
 	}
@@ -30,29 +32,69 @@ public class WordCounter implements HashInterface<HashElement>{
 	@Override
 	public void put(HashElement key) {
 
+		int i = gethashCode(key);
+		putQuadratic(i, key);
+		
 		
 	}
 
 	
-	public String probeQuadratic(String word) {
+	public int probeQuadratic(int index) {
 		
+		for (int j =0; j < size; j++) {
+			index = (index + j*j) % size;
+			
+			if (hashtable[index].getWord().equals("-1")) {
+				
+				return index;
+			}
+			
+		}
+		return -1;
 	}
 	
-	public void putQuadratic(int i, String word) {
+	public void putQuadratic(int i, HashElement word) {
 		
+		
+		 if (hashtable[i].getWord().equals("-1")) 
+	            // the space is empty
+	            hashtable[i] = word;
+	        else 
+	        {
+	            int j = probeQuadratic(i);
+	            if (j == -1) 
+	                System.out.println("Error! Table Full!");
+	        }
 		
 	}
 
 	
 	@Override
 	public HashElement remove(HashElement key) {
-		// TODO Auto-generated method stub
-		return null;
+
+		HashElement wordToRemove = null;
+		
+		for (HashElement i: hashtable) {
+			
+			if (i.equals(key)) {
+				
+				wordToRemove = i;
+				i.setWord("-1");
+				
+			}
+			
+		}
+	
+		return wordToRemove;
+		
 	}
 	
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
+
+		for (HashElement i: hashtable) {
+			i.setWord("-1");
+		}
 		
 	}
 
