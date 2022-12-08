@@ -9,7 +9,7 @@ public class HashElement {
 	public HashElement(String word) {
 	
 		this.word = word;
-		count = 0;
+		count = 1;
 	}
 
 	public String getWord() {
@@ -32,9 +32,9 @@ public class HashElement {
 
 	public String toString() {
 	
-	
-	return word+"  "+getCount();
-}
+		return word + " " + getCount();
+		
+	}
 
 	
 }

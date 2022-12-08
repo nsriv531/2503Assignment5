@@ -17,13 +17,11 @@ public class WordCounter implements HashInterface<HashElement>{
 	public int gethashCode(HashElement key) {
 		int sum = 0;
 		
-		String word = key.getWord();
 		
-		for (int i =0; i < key.getCount(); i++) {
-			if (word.charAt(i) != ' ') {
-			sum += word.charAt(i);
+		for (int i =0; i < key.getWord().length(); i++) {
 			
-			}
+			sum += key.getWord().charAt(i);
+			
 		}
 		
 		return sum%size;
@@ -32,20 +30,31 @@ public class WordCounter implements HashInterface<HashElement>{
 	@Override
 	public void put(HashElement key) {
 
-		for (HashElement e : hashtable) {
-			
-			if (e.getWord().equals(key.getWord())) {
-				e.increaseCount();
-			} else {
-				int i = gethashCode(key);
-				putQuadratic(i, key);
-				numberOfDistinctWords++;
-			}
-			
+		if (checkIfRepeated(key.getWord()) == false) {
+			int i = gethashCode(key);
+			putQuadratic(i, key);
 		}
 		
 	}
 
+	
+	private boolean checkIfRepeated(String word) {
+		
+		boolean repeatedWord = false;
+		
+		for (HashElement e : hashtable) {
+			
+			if (e != null) {
+				if (e.getWord().equals(word)) {
+					e.increaseCount();
+					repeatedWord = true;
+				}
+			}
+			
+		}
+		
+		return repeatedWord;
+	}
 	
 	public int probeQuadratic(int index) {
 		
@@ -63,17 +72,16 @@ public class WordCounter implements HashInterface<HashElement>{
 	
 	public void putQuadratic(int i, HashElement word) {
 	
-		
-		if (hashtable[i] == null) 
-	           // the space is empty
-	           hashtable[i] = word;
-	       else 
-	       {
-	    	   
-	           int j = probeQuadratic(i);
-	           if (j == -1) 
-	               System.out.println("Error! Table Full!");
-	       }
+		if (hashtable[i] == null) {
+			
+			hashtable[i] = word;
+			numberOfDistinctWords++;
+			
+		} else {
+			int j = probeQuadratic(i);
+	        if (j == -1) 
+	        System.out.println("Error! Table Full!");
+		}
 		
 	}
 
@@ -111,6 +119,10 @@ public class WordCounter implements HashInterface<HashElement>{
 		
 		for (int i = 1; i < hashtable.length; i++) {
 			
+			if (hashtable[i] == null || hashtable[i - 1] == null) {
+				continue;
+			}
+			
 			if (hashtable[i - 1].getCount() > hashtable[i].getCount()) {
 				mostCommonWord = hashtable[i - 1];
 			} else {
@@ -131,7 +143,16 @@ public class WordCounter implements HashInterface<HashElement>{
 		// TODO Auto-generated method stub
 		
 		System.out.println();
-		for (int i = 0; i < hashtable.length; i++)  System.out.println(hashtable[i].toString());
+		
+		for (int i = 0; i < hashtable.length; i++) {
+			
+			if (hashtable[i] != null) {
+				
+				System.out.println(hashtable[i].toString());
+				
+			}
+			
+		}
 		
 	}
 
