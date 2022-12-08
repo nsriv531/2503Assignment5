@@ -2,14 +2,15 @@ package model;
 
 public class HashElement {
 
-private String word; //key for the hash table
-private int count;
+	private String word; //key for the hash table
+	private int count;
 
 
-public HashElement(String word) {
+	public HashElement(String word) {
 	
-	this.word = word;
-}
+		this.word = word;
+		count = 0;
+	}
 
 	public String getWord() {
 		return word;
@@ -21,7 +22,11 @@ public HashElement(String word) {
 
 
 	public int getCount() {
-		return word.length();
+		return count;
+	}
+	
+	public void increaseCount() {
+		count++;
 	}
 
 

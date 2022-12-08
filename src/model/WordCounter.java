@@ -4,7 +4,7 @@ public class WordCounter implements HashInterface<HashElement>{
 	
 	private int size;
 	private HashElement[] hashtable;
-	
+	private int numberOfDistinctWords = 0;
 	
 	public WordCounter(int size) {
 		this.size = size;
@@ -32,9 +32,17 @@ public class WordCounter implements HashInterface<HashElement>{
 	@Override
 	public void put(HashElement key) {
 
-		int i = gethashCode(key);
-		putQuadratic(i, key);
-		
+		for (HashElement e : hashtable) {
+			
+			if (e.getWord().equals(key.getWord())) {
+				e.increaseCount();
+			} else {
+				int i = gethashCode(key);
+				putQuadratic(i, key);
+				numberOfDistinctWords++;
+			}
+			
+		}
 		
 	}
 
@@ -44,7 +52,7 @@ public class WordCounter implements HashInterface<HashElement>{
 		for (int j =0; j < size; j++) {
 			index = (index + j*j) % size;
 			
-			if (hashtable[index].getWord().equals("-1")) {
+			if (hashtable[index] == null) {
 				
 				return index;
 			}
@@ -54,17 +62,18 @@ public class WordCounter implements HashInterface<HashElement>{
 	}
 	
 	public void putQuadratic(int i, HashElement word) {
+	
 		
-		
-		 if (hashtable[i].getWord().equals("-1")) 
-	            // the space is empty
-	            hashtable[i] = word;
-	        else 
-	        {
-	            int j = probeQuadratic(i);
-	            if (j == -1) 
-	                System.out.println("Error! Table Full!");
-	        }
+		if (hashtable[i] == null) 
+	           // the space is empty
+	           hashtable[i] = word;
+	       else 
+	       {
+	    	   
+	           int j = probeQuadratic(i);
+	           if (j == -1) 
+	               System.out.println("Error! Table Full!");
+	       }
 		
 	}
 
@@ -72,35 +81,57 @@ public class WordCounter implements HashInterface<HashElement>{
 	@Override
 	public HashElement remove(HashElement key) {
 
-		HashElement wordToRemove = null;
+		HashElement elementToRemove = null;
 		
-		for (HashElement i: hashtable) {
+		for (HashElement e: hashtable) {
 			
-			if (i.equals(key)) {
+			if (e.equals(key)) {
 				
-				wordToRemove = i;
-				i.setWord("-1");
+				elementToRemove = e;
+				e = null;
 				
 			}
 			
 		}
 	
-		return wordToRemove;
+		return elementToRemove;
 		
 	}
 	
 	@Override
 	public void reset() {
 
-		for (HashElement i: hashtable) {
-			i.setWord("-1");
+		for (int i = 0; i < hashtable.length; i++) hashtable[i] = null;
+		
+	}
+	
+	public HashElement getMostCommonWord() {
+		
+		HashElement mostCommonWord = null;
+		
+		for (int i = 1; i < hashtable.length; i++) {
+			
+			if (hashtable[i - 1].getCount() > hashtable[i].getCount()) {
+				mostCommonWord = hashtable[i - 1];
+			} else {
+				mostCommonWord = hashtable[i];
+			}
+			
 		}
 		
+		return mostCommonWord;
+	}
+	
+	public int getNumberOfDistinctWords() {
+		return numberOfDistinctWords;
 	}
 
 	@Override
 	public void printTable() {
 		// TODO Auto-generated method stub
+		
+		System.out.println();
+		for (int i = 0; i < hashtable.length; i++)  System.out.println(hashtable[i].toString());
 		
 	}
 
