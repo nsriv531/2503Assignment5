@@ -28,7 +28,7 @@ public class WordCounter implements HashInterface<HashElement>{
 	}
 
 	@Override
-	public void put(HashElement key) {
+	public void put(HashElement key) throws Exception {
 
 		if (checkIfRepeated(key.getWord()) == false) {
 			int i = gethashCode(key);
@@ -70,7 +70,7 @@ public class WordCounter implements HashInterface<HashElement>{
 		return -1;
 	}
 	
-	public void putQuadratic(int i, HashElement word) {
+	public void putQuadratic(int i, HashElement word) throws Exception {
 	
 		if (hashtable[i] == null) {
 			
@@ -79,8 +79,10 @@ public class WordCounter implements HashInterface<HashElement>{
 			
 		} else {
 			int j = probeQuadratic(i);
-	        if (j == -1) 
-	        System.out.println("Error! Table Full!");
+	        if (j == -1) {
+	        	throw new Exception("Error! Table size is not big enough! Exiting Program..."); //Throws Exception if the table is full//
+	        }
+	        
 		}
 		
 	}
