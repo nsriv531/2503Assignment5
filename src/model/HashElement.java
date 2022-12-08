@@ -7,4 +7,29 @@ private int count;
 
 
 
+	public String getWord() {
+		return word;
+	}
+
+	public void setWord(String word) {
+		this.word = word;
+	}
+
+
+	public int getCount() {
+		return word.length();
+	}
+
+
+
+
+public String toString() {
+	
+	
+	return word+"  "+getCount();
+}
+
+
+
+	
 }
