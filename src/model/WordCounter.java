@@ -81,6 +81,9 @@ public class WordCounter implements HashInterface<HashElement>{
 			int j = probeQuadratic(i);
 	        if (j == -1) {
 	        	throw new Exception("Error! Table size is not big enough! Exiting Program..."); //Throws Exception if the table is full//
+	        } else {
+	        	hashtable[j] = word;
+	        	numberOfDistinctWords++;
 	        }
 	        
 		}
