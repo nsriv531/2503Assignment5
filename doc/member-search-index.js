@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"application","c":"WordCounterApp","l":"main(String[])","u":"main(java.lang.String[])"},{"p":"application","c":"WordCounterApp","l":"removeNonletters(String)","u":"removeNonletters(java.lang.String)"},{"p":"application","c":"WordCounterApp","l":"WordCounterApp()","u":"%3Cinit%3E()"}];updateSearchResults();

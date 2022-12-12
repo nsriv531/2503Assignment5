@@ -6,8 +6,19 @@ import java.util.Scanner;
 import model.HashElement;
 import model.WordCounter;
 
+/**
+ * This class is responsible for the main application of reading the files and 
+ * printing out all the words associated with them.
+ * @author Emilio G, Nik S.
+ *
+ */
 public class WordCounterApp {
 	
+	/**
+	 * 
+	 * @param string - string that is passed through the method to  
+	 * @return string - string that is returned after removing all the variables.
+	 */
 	public static String removeNonletters(String string) {
 		
 		string = string.replaceAll("[^a-z]", "");
@@ -15,6 +26,12 @@ public class WordCounterApp {
 		return string;
 		
 	}
+	
+	/**
+	 * Main function that reads all the text associated with the file, relays them into the hashtable and prints them accordingly.
+	 * @param args
+	 * @throws FileNotFoundException
+	 */
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		int numberOfWordsInFile = 0;
@@ -40,7 +57,25 @@ public class WordCounterApp {
 		}
 		
 		System.out.print("Enter the size of the hashtable: ");
-		int sizeOfTable = input.nextInt();
+		
+		int sizeOfTable = 0;
+		
+		while(true) {
+			
+			if(input.hasNextInt()) {
+	    		sizeOfTable  = Math.abs(input.nextInt());
+	    		input.nextLine();
+	    		break;
+			}
+	    	
+	    	else {
+	    		System.out.println("Text not allowed, try again.");
+	    		System.out.print("Enter the size of the hashtable: ");
+	    		input.nextLine();
+	    	}
+			
+		}
+		
 		instanceCounter = new WordCounter(sizeOfTable);
 		
 		input.close();
